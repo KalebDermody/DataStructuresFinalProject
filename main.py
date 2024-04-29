@@ -1,16 +1,42 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import tkinter as tk
+from tkinter import filedialog, messagebox
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def button_click():
+    print("Button Clicked!")
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+class RecipeApplication():
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Recipie Book")
+        self.master.geometry("720x300")
+        self.recipes = {}
+        self.gui()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    def gui(self):
+        self.addButton = tk.Button(self.master, text="add recipe", command=self.add_recipe)
+        self.addButton.pack()
+
+        self.SearchButton = tk.Button(self.master, text="add recipe", command=self.add_recipe)
+        self.SearchButton.pack()
+
+        self.ViewButton = tk.Button(self.master, text="add recipe", command=self.add_recipe)
+        self.ViewButton.pack()
+
+    def add_recipe(self):
+        addWindow = tk.Toplevel(self.master)
+        addWindow.title("Add New Recipe")
+        addWindow.geometry("400x300")
+
+
+
+
+def main():
+    root = tk.Tk()
+    app = RecipeApplication(root)
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    main()
