@@ -4,20 +4,25 @@ import pickle
 from pickle import *
 
 
+# Linked List Data structure class
 class RecipeLinkedList:
     def __init__(self):
         self.Recipes = {}
 
+    # Add Recipe Method
     def AddRecipe(self, name, filepath):
         self.Recipes[name] = filepath
 
+    # Search Recipe Method
     def SearchRecipe(self, name):
         return self.Recipes.get(name)
 
+    # Delete recipe method
     def DeleteRecipe(self, name):
         if name in self.Recipes:
             del self.Recipes[name]
 
+    # Peek List Method
     def PeekList(self):
         if len(self.Recipes) == 0:
             messagebox.showinfo("No Recipes", "No Recipes")
@@ -25,6 +30,7 @@ class RecipeLinkedList:
             return sorted(self.Recipes.keys())
 
 
+# Gui Application
 class RecipeApplication:
     def __init__(self, master):
         self.master = master
@@ -34,7 +40,7 @@ class RecipeApplication:
         # Show image using label
         label1 = Label(master, image=self.bg)
         label1.place(x=0, y=0)
-        label2 = Label(master, text="Welcome")
+        label2 = Label(master, text="Kaleb's Recipes")
         label2.pack(pady=50)
         # Create Frame
         frame1 = Frame(master)
@@ -62,7 +68,8 @@ class RecipeApplication:
 
         def openFileDialog():
             filepath = filedialog.askopenfilename()
-            if self.RecipeList.AddRecipe(addEntry.get(), filepath):
+            if filepath:
+                self.RecipeList.AddRecipe(addEntry.get(), filepath)
                 print("Recipe Added")
                 messagebox.showinfo("success", "Recipe Added")
                 AddWindow.destroy()
@@ -81,6 +88,16 @@ class RecipeApplication:
         SearchEntry = Entry(AddWindow)
         SearchEntry.pack()
 
+        def SearchButton():
+            recipeName = self.RecipeList.SearchRecipe(SearchEntry.get())
+            if recipeName:
+                messagebox.showinfo("Recipe Found", recipeName)
+            else:
+                messagebox.showinfo("ERROR", "Recipe Not Found")
+
+        SearchButton = Button(AddWindow, text="Search Recipe", command=SearchButton)
+        SearchButton.pack()
+
     def ViewList(self):
         AddWindow = Toplevel(self.master)
         AddWindow.title("View sorted full list of recipes")
@@ -94,6 +111,7 @@ class RecipeApplication:
                 listbox.insert(recipe)
         else:
             label = Label(AddWindow, text="No Recipes")
+            label.pack()
 
 
 def main():
