@@ -138,7 +138,7 @@ def main():
     root = tk.Tk()
     app = RecipeApplication(root)
     root.mainloop()
-
+1
 
 # Driver Method
 if __name__ == "__main__":
