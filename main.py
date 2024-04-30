@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Frame, messagebox, PhotoImage, Label, Button, Toplevel, Entry, filedialog
+from tkinter import Frame, messagebox, PhotoImage, Label, Button, Toplevel, Entry, Listbox, filedialog
 import pickle
 from pickle import *
 
@@ -55,23 +55,45 @@ class RecipeApplication:
         addWindow.title("Add New Recipe")
         addWindow.geometry("400x300")
 
-        addLabel = Label(addWindow, text="Enter Recipe")
+        addLabel = Label(addWindow, text="Enter Recipe Name")
         addLabel.pack()
         addEntry = Entry(addWindow)
         addEntry.pack()
-        addButton = Button(addWindow, text="Add Recipe", command=lambda: self.AddRecipe())
-        addButton.pack()
+
+        def openFileDialog():
+            filepath = filedialog.askopenfilename()
+            if self.RecipeList.AddRecipe(addEntry.get(), filepath):
+                print("Recipe Added")
+                messagebox.showinfo("success", "Recipe Added")
+                addWindow.destroy()
+            else:
+                messagebox.showerror("Error", "No File Selected")
+
+        button = Button(addWindow, text="select file", command=openFileDialog)
+        button.pack()
 
     def SearchRecipe(self):
         addWindow = Toplevel(self.master)
         addWindow.title("Search For Recipe")
         addWindow.geometry("400x300")
+        addLabel = Label(addWindow, text="Enter Recipe's Name")
+        addLabel.pack()
+        addEntry = Entry(addWindow)
+        addEntry.pack()
 
     def ViewList(self):
         addWindow = Toplevel(self.master)
         addWindow.title("View sorted full list of recipes")
         addWindow.geometry("400x300")
         RecipeList = self.RecipeList.PeekList()
+
+        if RecipeList:
+            listbox = Listbox(addWindow)
+            listbox.pack()
+            for recipe in RecipeList:
+                listbox.insert(recipe)
+        else:
+            label = Label(addWindow, text="No Recipes")
 
 
 def main():
