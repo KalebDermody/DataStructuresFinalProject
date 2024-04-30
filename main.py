@@ -116,7 +116,8 @@ class RecipeApplication:
         def DeleteButton():
             SelectedRecipe = listbox.curselection()
             if SelectedRecipe:
-                self.RecipeList.DeleteRecipe(SelectedRecipe)
+                SelectedItem = RecipeList[SelectedRecipe[0]]
+                self.RecipeList.DeleteRecipe(SelectedItem)
                 listbox.delete(*SelectedRecipe)
             else:
                 messagebox.showinfo("ERROR", "No Recipe Selected")
