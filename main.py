@@ -1,26 +1,28 @@
 import tkinter as tk
-from tkinter import Frame, messagebox, PhotoImage, Label, Button, Toplevel
+from tkinter import Frame, messagebox, PhotoImage, Label, Button, Toplevel, Entry, filedialog
+import pickle
+from pickle import *
 
 
 class RecipeLinkedList:
     def __init__(self):
-        self.Recipes = []
+        self.Recipes = {}
 
     def AddRecipe(self, name, filepath):
         self.Recipes[name] = filepath
 
     def SearchRecipe(self, name):
-        return self.Recipes[name]
+        return self.Recipes.get(name)
 
     def DeleteRecipe(self, name):
         if name in self.Recipes:
-            self.Recipes.remove(name)
+            del self.Recipes[name]
 
     def PeekList(self):
         if len(self.Recipes) == 0:
             messagebox.showinfo("No Recipes", "No Recipes")
         else:
-            return sorted(self.Recipes)
+            return sorted(self.Recipes.keys())
 
 
 class RecipeApplication:
@@ -46,11 +48,19 @@ class RecipeApplication:
         self.ViewButton.pack(pady=20)
         self.exit_button = Button(master, text="Exit", command=master.destroy)
         self.exit_button.pack(pady=20)
+        self.RecipeList = RecipeLinkedList()
 
     def AddRecipe(self):
         addWindow = Toplevel(self.master)
         addWindow.title("Add New Recipe")
         addWindow.geometry("400x300")
+
+        addLabel = Label(addWindow, text="Enter Recipe")
+        addLabel.pack()
+        addEntry = Entry(addWindow)
+        addEntry.pack()
+        addButton = Button(addWindow, text="Add Recipe", command=lambda: self.AddRecipe())
+        addButton.pack()
 
     def SearchRecipe(self):
         addWindow = Toplevel(self.master)
@@ -61,6 +71,7 @@ class RecipeApplication:
         addWindow = Toplevel(self.master)
         addWindow.title("View sorted full list of recipes")
         addWindow.geometry("400x300")
+        RecipeList = self.RecipeList.PeekList()
 
 
 def main():
