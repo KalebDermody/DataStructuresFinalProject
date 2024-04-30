@@ -63,23 +63,26 @@ class RecipeApplication:
         AddWindow.title("Add New Recipe")
         AddWindow.geometry("400x300")
 
-        AddText = Label(AddWindow, text="Enter Recipe Name")
-        AddText.pack()
-        addEntry = Entry(AddWindow)
-        addEntry.pack()
-
         # Open And Read File Provided By User
         def openFileDialog():
             filepath = filedialog.askopenfilename()
             if filepath:
                 with open(filepath, "r") as f:
                     recipe = f.read()
-                    self.RecipeList.AddRecipe(addEntry.get(), recipe)
-                    print("Recipe Added")
-                    messagebox.showinfo("Success", "Recipe Added")
-                    AddWindow.destroy()
+                    if not AddEntry.get():
+                        messagebox.showerror("Error", "Please enter a Recipe Name")
+                    else:
+                        self.RecipeList.AddRecipe(AddEntry.get(), recipe)
+                        print("Recipe Added")
+                        messagebox.showinfo("Success", "Recipe Added")
+                        AddWindow.destroy()
             else:
                 messagebox.showerror("Error", "No File Selected")
+
+        AddText = Label(AddWindow, text="Enter Recipe Name")
+        AddText.pack()
+        AddEntry = Entry(AddWindow)
+        AddEntry.pack()
 
         button = Button(AddWindow, text="Select File", command=openFileDialog)
         button.pack()
@@ -121,6 +124,7 @@ class RecipeApplication:
                 listbox.delete(*SelectedRecipe)
             else:
                 messagebox.showinfo("ERROR", "No Recipe Selected")
+
         if RecipeList:
             listbox = Listbox(ViewWindow)
             listbox.pack(fill=tk.BOTH, expand=True)
