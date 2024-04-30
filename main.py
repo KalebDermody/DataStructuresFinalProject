@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import Frame, messagebox, PhotoImage, Label, Button, Toplevel, Entry, Listbox, filedialog
-import pickle
-from pickle import *
 
 
 # Linked List Data structure class
@@ -80,12 +78,12 @@ class RecipeApplication:
         button.pack()
 
     def SearchRecipe(self):
-        AddWindow = Toplevel(self.master)
-        AddWindow.title("Search For Recipe")
-        AddWindow.geometry("400x300")
-        SearchText = Label(AddWindow, text="Enter Recipe's Name")
+        SearchWindow = Toplevel(self.master)
+        SearchWindow.title("Search For Recipe")
+        SearchWindow.geometry("400x300")
+        SearchText = Label(SearchWindow, text="Enter Recipe's Name")
         SearchText.pack()
-        SearchEntry = Entry(AddWindow)
+        SearchEntry = Entry(SearchWindow)
         SearchEntry.pack()
 
         def SearchButton():
@@ -95,7 +93,7 @@ class RecipeApplication:
             else:
                 messagebox.showinfo("ERROR", "Recipe Not Found")
 
-        SearchButton = Button(AddWindow, text="Search Recipe", command=SearchButton)
+        SearchButton = Button(SearchWindow, text="Search Recipe", command=SearchButton)
         SearchButton.pack()
 
     def ViewList(self):
@@ -104,6 +102,7 @@ class RecipeApplication:
         ViewWindow.geometry("400x300")
         RecipeList = self.RecipeList.PeekList()
 
+        # Utilizes Delete method
         def DeleteButton():
             SelectedRecipe = listbox.curselection()
             self.RecipeList.DeleteRecipe(SelectedRecipe)
