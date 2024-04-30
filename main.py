@@ -30,6 +30,8 @@ class RecipeLinkedList:
 
 # Gui Application
 class RecipeApplication:
+
+    # Build Main GUI Window
     def __init__(self, master):
         self.master = master
         self.master.title("Recipie Book")
@@ -54,6 +56,7 @@ class RecipeApplication:
         self.exit_button.pack(pady=20)
         self.RecipeList = RecipeLinkedList()
 
+    # Add Recipe Window
     def AddRecipe(self):
         AddWindow = Toplevel(self.master)
         AddWindow.title("Add New Recipe")
@@ -64,6 +67,7 @@ class RecipeApplication:
         addEntry = Entry(AddWindow)
         addEntry.pack()
 
+        # Open And Read File Provided By User
         def openFileDialog():
             filepath = filedialog.askopenfilename()
             if filepath:
@@ -77,6 +81,7 @@ class RecipeApplication:
         button = Button(AddWindow, text="select file", command=openFileDialog)
         button.pack()
 
+    # Search Recipe Window
     def SearchRecipe(self):
         SearchWindow = Toplevel(self.master)
         SearchWindow.title("Search For Recipe")
@@ -86,6 +91,7 @@ class RecipeApplication:
         SearchEntry = Entry(SearchWindow)
         SearchEntry.pack()
 
+        # Search Button Method
         def SearchButton():
             recipeName = self.RecipeList.SearchRecipe(SearchEntry.get())
             if recipeName:
@@ -96,13 +102,14 @@ class RecipeApplication:
         SearchButton = Button(SearchWindow, text="Search Recipe", command=SearchButton)
         SearchButton.pack()
 
+    # View List Window
     def ViewList(self):
         ViewWindow = Toplevel(self.master)
         ViewWindow.title("View sorted full list of recipes")
         ViewWindow.geometry("400x300")
         RecipeList = self.RecipeList.PeekList()
 
-        # Utilizes Delete method
+        # Delete Button Method That Utilizes The Delete Method In The Linked List
         def DeleteButton():
             SelectedRecipe = listbox.curselection()
             self.RecipeList.DeleteRecipe(SelectedRecipe)
@@ -120,6 +127,7 @@ class RecipeApplication:
             label.pack()
 
 
+# Main Method To Run The GUI
 def main():
     root = tk.Tk()
     app = RecipeApplication(root)
