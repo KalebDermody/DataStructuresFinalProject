@@ -99,18 +99,25 @@ class RecipeApplication:
         SearchButton.pack()
 
     def ViewList(self):
-        AddWindow = Toplevel(self.master)
-        AddWindow.title("View sorted full list of recipes")
-        AddWindow.geometry("400x300")
+        ViewWindow = Toplevel(self.master)
+        ViewWindow.title("View sorted full list of recipes")
+        ViewWindow.geometry("400x300")
         RecipeList = self.RecipeList.PeekList()
 
+        def DeleteButton():
+            SelectedRecipe = listbox.curselection()
+            self.RecipeList.DeleteRecipe(SelectedRecipe)
+            listbox.delete(*SelectedRecipe)
+
         if RecipeList:
-            listbox = Listbox(AddWindow)
-            listbox.pack()
+            listbox = Listbox(ViewWindow)
+            listbox.pack(fill=tk.BOTH, expand=True)
             for recipe in RecipeList:
-                listbox.insert(recipe)
+                listbox.insert(tk.END, recipe)
+            DeleteButton = Button(ViewWindow, text="Delete", command=DeleteButton)
+            DeleteButton.pack()
         else:
-            label = Label(AddWindow, text="No Recipes")
+            label = Label(ViewWindow, text="No Recipes")
             label.pack()
 
 
