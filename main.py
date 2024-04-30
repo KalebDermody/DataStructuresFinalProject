@@ -25,6 +25,7 @@ class RecipeLinkedList:
         if len(self.Recipes) == 0:
             messagebox.showinfo("No Recipes", "No Recipes")
         else:
+            # Sorts The List Before Displaying
             return sorted(self.Recipes.keys())
 
 
@@ -71,10 +72,12 @@ class RecipeApplication:
         def openFileDialog():
             filepath = filedialog.askopenfilename()
             if filepath:
-                self.RecipeList.AddRecipe(addEntry.get(), filepath)
-                print("Recipe Added")
-                messagebox.showinfo("success", "Recipe Added")
-                AddWindow.destroy()
+                with open(filepath, "r") as f:
+                    recipe = f.read()
+                    self.RecipeList.AddRecipe(addEntry.get(), recipe)
+                    print("Recipe Added")
+                    messagebox.showinfo("success", "Recipe Added")
+                    AddWindow.destroy()
             else:
                 messagebox.showerror("Error", "No File Selected")
 
@@ -112,9 +115,11 @@ class RecipeApplication:
         # Delete Button Method That Utilizes The Delete Method In The Linked List
         def DeleteButton():
             SelectedRecipe = listbox.curselection()
-            self.RecipeList.DeleteRecipe(SelectedRecipe)
-            listbox.delete(*SelectedRecipe)
-
+            if SelectedRecipe:
+                self.RecipeList.DeleteRecipe(SelectedRecipe)
+                listbox.delete(*SelectedRecipe)
+            else:
+                messagebox.showinfo("ERROR", "No Recipe Selected")
         if RecipeList:
             listbox = Listbox(ViewWindow)
             listbox.pack(fill=tk.BOTH, expand=True)
@@ -134,5 +139,6 @@ def main():
     root.mainloop()
 
 
+# Driver Method
 if __name__ == "__main__":
     main()
