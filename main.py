@@ -51,13 +51,13 @@ class RecipeApplication:
         self.RecipeList = RecipeLinkedList()
 
     def AddRecipe(self):
-        addWindow = Toplevel(self.master)
-        addWindow.title("Add New Recipe")
-        addWindow.geometry("400x300")
+        AddWindow = Toplevel(self.master)
+        AddWindow.title("Add New Recipe")
+        AddWindow.geometry("400x300")
 
-        addLabel = Label(addWindow, text="Enter Recipe Name")
-        addLabel.pack()
-        addEntry = Entry(addWindow)
+        AddText = Label(AddWindow, text="Enter Recipe Name")
+        AddText.pack()
+        addEntry = Entry(AddWindow)
         addEntry.pack()
 
         def openFileDialog():
@@ -65,35 +65,35 @@ class RecipeApplication:
             if self.RecipeList.AddRecipe(addEntry.get(), filepath):
                 print("Recipe Added")
                 messagebox.showinfo("success", "Recipe Added")
-                addWindow.destroy()
+                AddWindow.destroy()
             else:
                 messagebox.showerror("Error", "No File Selected")
 
-        button = Button(addWindow, text="select file", command=openFileDialog)
+        button = Button(AddWindow, text="select file", command=openFileDialog)
         button.pack()
 
     def SearchRecipe(self):
-        addWindow = Toplevel(self.master)
-        addWindow.title("Search For Recipe")
-        addWindow.geometry("400x300")
-        addLabel = Label(addWindow, text="Enter Recipe's Name")
-        addLabel.pack()
-        addEntry = Entry(addWindow)
-        addEntry.pack()
+        AddWindow = Toplevel(self.master)
+        AddWindow.title("Search For Recipe")
+        AddWindow.geometry("400x300")
+        SearchText = Label(AddWindow, text="Enter Recipe's Name")
+        SearchText.pack()
+        SearchEntry = Entry(AddWindow)
+        SearchEntry.pack()
 
     def ViewList(self):
-        addWindow = Toplevel(self.master)
-        addWindow.title("View sorted full list of recipes")
-        addWindow.geometry("400x300")
+        AddWindow = Toplevel(self.master)
+        AddWindow.title("View sorted full list of recipes")
+        AddWindow.geometry("400x300")
         RecipeList = self.RecipeList.PeekList()
 
         if RecipeList:
-            listbox = Listbox(addWindow)
+            listbox = Listbox(AddWindow)
             listbox.pack()
             for recipe in RecipeList:
                 listbox.insert(recipe)
         else:
-            label = Label(addWindow, text="No Recipes")
+            label = Label(AddWindow, text="No Recipes")
 
 
 def main():
