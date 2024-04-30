@@ -35,7 +35,7 @@ class RecipeApplication:
     # Build Main GUI Window
     def __init__(self, master):
         self.master = master
-        self.master.title("Recipie Book")
+        self.master.title("Recipe Book")
         self.master.geometry("620x680")
         self.bg = PhotoImage(file="gusteaus.png")
         # Show image using label
@@ -47,7 +47,7 @@ class RecipeApplication:
         frame1 = Frame(master)
         frame1.pack(pady=20)
         # Add buttons
-        self.AddButton = Button(self.master, text="add recipe", command=self.AddRecipe)
+        self.AddButton = Button(self.master, text="Add Recipe", command=self.AddRecipe)
         self.AddButton.pack(pady=20)
         self.SearchButton = Button(self.master, text="Search", command=self.SearchRecipe)
         self.SearchButton.pack(pady=20)
@@ -76,12 +76,12 @@ class RecipeApplication:
                     recipe = f.read()
                     self.RecipeList.AddRecipe(addEntry.get(), recipe)
                     print("Recipe Added")
-                    messagebox.showinfo("success", "Recipe Added")
+                    messagebox.showinfo("Success", "Recipe Added")
                     AddWindow.destroy()
             else:
                 messagebox.showerror("Error", "No File Selected")
 
-        button = Button(AddWindow, text="select file", command=openFileDialog)
+        button = Button(AddWindow, text="Select File", command=openFileDialog)
         button.pack()
 
     # Search Recipe Window
